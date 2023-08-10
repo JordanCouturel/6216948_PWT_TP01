@@ -1,0 +1,44 @@
+﻿@model tp2JordanCoutureLafranchise.Models.Parent
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<div style="background: linear-gradient(180deg, #323130 0%, #885229 51.04%, #000 100%);">
+    <div style="padding:30px;">
+        <h1 style="color:white;">Supprimer</h1>
+
+        <h3 style="color:white;">Êtes vous certain de vouloir supprimer cette équipe?</h3>
+        <div>
+
+            <hr />
+            <dl class="row">
+
+
+                <dt class="col-sm-2" style="color:white;">
+                    @Html.DisplayNameFor(model => model.Nom)
+                </dt>
+                <dd class="col-sm-10" style=" color:white;">
+                    @Html.DisplayFor(model => model.Nom)
+                </dd>
+
+                <dt class="col-sm-2" style="color:white;">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10 " style=" color:white;">
+                    @Html.Raw(Model.Description)
+                </dd>
+                <dt class="col-sm-2" style="color:white;">
+                    @Html.DisplayNameFor(model => model.ImageURL)
+                </dt>
+                <dd class="col-sm-10 " style="color:white;">
+                    <img? class="img-fluid" src="@Model.ImageURL" alt="@Model.Nom">
+                </dd>
+            </dl>
+
+            <form asp-action="Delete">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+
+            </form>
+        </div>
+    </div>
+</div>
