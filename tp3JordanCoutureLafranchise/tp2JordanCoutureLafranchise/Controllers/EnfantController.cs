@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using tp2JordanCoutureLafranchise.Models;
+using tp2JordanCoutureLafranchise.Models.Data;
 using tp2JordanCoutureLafranchise.ViewModels;
 
 namespace tp2JordanCoutureLafranchise.Controllers
@@ -7,11 +8,11 @@ namespace tp2JordanCoutureLafranchise.Controllers
     public class EnfantController : Controller
     {
 
-        private BaseDeDonnees _BaseDonnees { get; set; }
+        public HockeyRebelsDBContext _Basedonnees { get; set; }
 
-        public EnfantController(BaseDeDonnees BaseDeDonnees)
+        public EnfantController(HockeyRebelsDBContext BD)
         {
-            _BaseDonnees = BaseDeDonnees;
+            _Basedonnees = BD;
         }
 
 
@@ -26,7 +27,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
             model.Criteres.estPenguinsDePittsburgh = true;
             model.Criteres.estCapitalsDeWashington = true;
             model.Criteres.ChoixEnVedette = "Peu Importe";
-            model.Resultat = _BaseDonnees.Enfants.ToList();
+            model.Resultat = _Basedonnees.Enfants.ToList();
 
 
             return View("recherche", model);
@@ -37,7 +38,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
         public IActionResult Filtrer(CritereRechercheViewModel criteres)
         {
             ViewData["titre"] = "RechercheFiltrée";
-            var listenfants = _BaseDonnees.Enfants.ToList();
+            var listenfants = _Basedonnees.Enfants.ToList();
 
 
             var model = new PageRechercheViewModel();
@@ -113,7 +114,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
         public IActionResult DetailParID(int id)
         {
             ViewData["titre"] = "Détails";
-            var enfant = _BaseDonnees.Enfants.Where(x => x.Id == id).FirstOrDefault();
+            var enfant = _Basedonnees.Enfants.Where(x => x.Id == id).FirstOrDefault();
 
             if (enfant == null)
             {
@@ -128,7 +129,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
         public IActionResult DetailParNom(string nom)
         {
             ViewData["titre"] = "Détails";
-            var enfant = _BaseDonnees.Enfants.Where(x => x.Nom.Replace(" ", "-").ToUpper() == nom.ToUpper()).FirstOrDefault();
+            var enfant = _Basedonnees.Enfants.Where(x => x.Nom.Replace(" ", "-").ToUpper() == nom.ToUpper()).FirstOrDefault();
 
             if (enfant == null)
             {

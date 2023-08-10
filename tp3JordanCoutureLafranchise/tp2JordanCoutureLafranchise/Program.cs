@@ -10,7 +10,7 @@ builder.Services.AddControllersWithViews();
 // Injection des dépendances
 builder.Services.AddSingleton<BaseDeDonnees>();
 builder.Services.AddDbContext<HockeyRebelsDBContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
 
 
 
