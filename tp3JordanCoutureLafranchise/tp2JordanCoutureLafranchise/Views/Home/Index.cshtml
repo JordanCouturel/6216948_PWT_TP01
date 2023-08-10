@@ -11,7 +11,7 @@
             <div class="text-hero blanc">
                 <h2 class="fontgras">LES ÉQUIPES DE LA LNH</h2>
                 <H3 class="fontmedium" style="margin-bottom: 40px;">Découvrez l'univers captivant de la LNH et plongez<br> dans l'univers du hockey grâce à notre site web dédié,<br> mettant en avant les équipes légendaires.</H3>
-                <a href="/enfant/recherche" class="boutonlistejoueurs">Liste des joueurs</a>
+                <a href="/home/Create" class="boutonlistejoueurs">Ajouter une équipe</a>
 
 
             </div>
@@ -20,20 +20,12 @@
 
     <section class="equipes" style="background: linear-gradient(179.96deg, #2C2C2C 0.04%, #8E5529 56.15%, #000000 123.57%);">
         <div class="container-fluid entitesparent">
-            @foreach (var equipe in Model)
-            {
-
-                <div class="carteEquipeBackground col-4">
-                    <a href="/enfant/recherche">
-                        <div class="imagesequipes"><img class="img-fluid carteequipeespaceentreimageettexte mt-5 " src="@equipe.ImageURL" alt="logo pittsburgh"></div>
-                        <h3 class="fontgras">@equipe.Nom</h3>
-                        <h4 class="verticalspacingcarteequipe fontmedium">@equipe.Description</h4>
-                        <h5 class="fontmedium">Nombre de joueurs : @equipe.Enfants.Count</h5>
-                        <h5 class="fontmedium">Salaire moyen : <i class="fa fa-usd" aria-hidden="true"></i>@(equipe.Enfants.Average(x => x.Salaire).ToString("0.00"))M/Année</h5>
-                    </a>
-                </div>
-
-            }
+            <div class="row">
+                @foreach (var equipe in Model)
+                {
+                    <Partial name="_Equipe" for="@equipe"></Partial>
+                }
+            </div>
         </div>
     </section>
 
