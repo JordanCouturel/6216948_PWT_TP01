@@ -79,6 +79,25 @@ namespace tp2JordanCoutureLafranchise.Controllers
         }
 
 
+        public IActionResult Update(int id)
+        {
+            var parent = _BaseDonnees.Parents.Where(x => x.ParentId == id).FirstOrDefault();
+            ViewData["titre"] = "Modifier une équipe";
+            return View(parent);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Parent parent)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewData["titre"] = "Modifier une équipe";
+                _BaseDonnees.Parents.Update(parent);
+                _BaseDonnees.SaveChanges();
+                return RedirectToAction("index", "Home");
+            }
+            return View(parent);
+        }
 
     }
 }
