@@ -26,6 +26,8 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return View(listeparents);
         }
 
+
+
         public ActionResult Delete(int id)
         {
             Parent equipe = _BaseDonnees.Parents.Where(x => x.ParentId == id).FirstOrDefault();
@@ -51,6 +53,32 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return View(parentasupprimer);
 
         }
+
+
+
+        public IActionResult Create()
+        {
+            ViewData["titre"] = "Ajouter une équipe";
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Parent parent)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewData["titre"] = "Ajouter une équipe";
+                _BaseDonnees.Parents.Add(parent);
+                _BaseDonnees.SaveChanges();
+                return RedirectToAction("index", "Home");
+            }
+            return View(parent);
+
+
+        }
+
+
 
     }
 }
