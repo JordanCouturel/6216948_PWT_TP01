@@ -1,31 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using tp2JordanCoutureLafranchise.Models;
+using tp2JordanCoutureLafranchise.Models.Data;
 
 namespace tp2JordanCoutureLafranchise.Controllers
 {
     public class GestionEnfantController : Controller
     {
 
-        private BaseDeDonnees _BaseDonnees { get; set; }
+        private HockeyRebelsDBContext _BaseDonnees { get; set; }
 
-        public GestionEnfantController(BaseDeDonnees BaseDeDonnees)
+        public GestionEnfantController(HockeyRebelsDBContext BaseDeDonnees)
         {
             _BaseDonnees = BaseDeDonnees;
         }
 
 
-        // GET: GestionEnfantController/Delete/5
-        [Route("GestionEnfant/Delete/{id}")]
-        [Route("Delete/{id}")]
-        [HttpGet]
         public ActionResult Delete(int id)
         {
-            Enfant? joueur = _BaseDonnees.Enfants.Where(x => x.Id == id).Single();
+            Enfant joueur = _BaseDonnees.Enfants.Where(x => x.Id == id).FirstOrDefault();
 
-            if (joueur == null)
-            {
-                return View("~/Views/Shared/NotFound.cshtml");
-            }
+
             return View(joueur);
         }
 
@@ -34,14 +28,16 @@ namespace tp2JordanCoutureLafranchise.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            var enfantasuprimmer= _BaseDonnees.Enfants.Where(x=>x.Id == id).Single();
+            var enfantasuprimmer = _BaseDonnees.Enfants.Where(x => x.Id == id).Single();
             //supprimer l'enfant avec l'id passé en parametre de la
             // BD et de la liste des enfants de son parent
-            _BaseDonnees.Enfants.Remove(enfantasuprimmer);
-            enfantasuprimmer.Parent.Enfants.Remove(enfantasuprimmer);
-
-            return RedirectToAction("Index", "Home");
-       
+            if (ModelState.IsValid)
+            {
+                _BaseDonnees.Enfants.Remove(enfantasuprimmer);
+                _BaseDonnees.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(enfantasuprimmer);
         }
     }
 }
