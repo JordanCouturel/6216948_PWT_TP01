@@ -1,0 +1,134 @@
+﻿@model PageRechercheViewModel;
+@using tp2JordanCoutureLafranchise.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+
+<main>
+    <form action="/enfant/filtrer" method="post">
+        <div class="main-container" style="background: linear-gradient(180deg, #303030 0%, #8F5629 50.28%, #000000 107.27%);">
+            <div class="row filtre ">
+                <div class="checkbox col-3">
+
+                    <div class="elementcheckbox">
+
+                        <input class="carrecheckbox" style="flex: 0.2;" type="checkbox" name="estPenguinsDePittsburgh" value="true"
+                               id="option1" @(Model.Criteres.estPenguinsDePittsburgh ? "checked" : "")>
+
+                        <label class="textcheckbox" for="option1">Penguins</label>
+                    </div>
+
+                    <div class="elementcheckbox" style="padding-left: 12px;">
+
+                        @if (Model.Criteres.estCanadiensDeMontreal)
+                        {
+                            <input class="carrecheckbox" type="checkbox" name="estCanadiensDeMontreal" id="option2" value="true" checked>
+                        }
+                        else
+                        {
+                            <input class="carrecheckbox" type="checkbox" name="estCanadiensDeMontreal" id="option2" value="true">
+                        }
+                        <label class="textcheckbox" for="option2">Canadiens</label>
+                    </div>
+
+                    <div class="elementcheckbox" style="padding-right: 10px;">
+
+                        @if (Model.Criteres.estCapitalsDeWashington)
+                        {
+                            <input class="carrecheckbox" type="checkbox" name="estCapitalsDeWashington" id="option3" value="true" checked>
+                        }
+                        else
+                        {
+                            <input class="carrecheckbox" type="checkbox" name="estCapitalsDeWashington" id="option3" value="true">
+                        }
+                        <label class="textcheckbox" for="option3">Capitals</label>
+                    </div>
+
+                </div>
+
+
+
+                <div class="recherchetext col-3">
+                    <div style="display: flex; flex-direction: column;">
+                        <label style="font-family: 'Oswald'; font-weight: 500; font-size: 20px;" for="Nomjoueur">Recherche par nom de joueur</label>
+                        <input class="searchparnomjoueur" type="text" id="Nomjoueur" name="ParNom" placeholder=" Rechercher" value="@(Model.Criteres.ParNom!=null ? Model.Criteres.ParNom : "")">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <label style="  font-family: 'Oswald'; font-weight: 500; font-size: 20px;" for="Numchandail">Recherche par # de chandail</label>
+                        <input class="searchparnomjoueur" type="number" id="Numchandail" name="ParNumeroDeChandail" placeholder=" Rechercher"
+                               value="@(Model.Criteres.ParNumeroDeChandail!=null ? Model.Criteres.ParNumeroDeChandail : "")">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;">
+                        <label style="  font-family: 'Oswald'; font-weight: 500; font-size: 20px;" for="Envedetteounon">Joueurs en vedette</label>
+                        <select class="searchparnomjoueur" name="ChoixEnVedette" id="Envedetteounon">
+                            @if (Model.Criteres.ChoixEnVedette == "Peu importe")
+                            {
+                                <option value="Peu importe" selected>Peu importe</option>
+                            }
+                            else
+                            {
+                                <option value="Peu importe">Peu importe</option>
+                            }
+                            @if (Model.Criteres.ChoixEnVedette == "Oui")
+                            {
+                                <option selected value="Oui">Oui</option>
+                            }
+                            else
+                            {
+                                <option value="Oui">Oui</option>
+                            }
+                            @if (Model.Criteres.ChoixEnVedette == "Non")
+                            {
+                                <option selected value="Non">Non</option>
+                            }
+                            else
+                            {
+                                <option value="Non">Non</option>
+                            }
+
+                        </select>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-3 boutonsfiltre">
+                    <button type="submit" class="boutonsoumettre">
+                        Soumettre
+                        <i class="fas fa-filter"></i>
+                    </button>
+
+                    @*
+                    <button class="boutonreinitialiser">
+                    Réinitialiser
+                    </button>*@
+
+                    <a class="boutonreinitialiser" href="/enfant/recherche">Réinitialiser</a>
+                </div>
+            </div>
+    </form>
+
+
+    @*    affichage des resultats de recherche*@
+    @*    <div class="cartejoueur row">
+    <partial name="ResultatsRechercheVP">
+    </div>*@
+
+    <div class="cartejoueur row">
+        @foreach (var joueur in Model.Resultat)
+        {
+            <div class="imagejoueur col-3">
+                <partial name="_EnfantPartiel" for="@joueur">
+            </div>
+        }
+    </div>
+
+</main>
+
+
