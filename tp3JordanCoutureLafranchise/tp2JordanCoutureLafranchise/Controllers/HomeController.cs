@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using tp2JordanCoutureLafranchise.Models;
+using tp2JordanCoutureLafranchise.Models.Data;
 
 namespace tp2JordanCoutureLafranchise.Controllers
 {
     public class HomeController : Controller
     {
 
-        private BaseDeDonnees _BaseDonnees { get; set; }
+        private HockeyRebelsDBContext _BaseDonnees { get; set; }
 
-        public HomeController(BaseDeDonnees BaseDeDonnees)
+        public HomeController(HockeyRebelsDBContext BaseDeDonnees)
         {
             _BaseDonnees = BaseDeDonnees;
         }
@@ -25,15 +26,30 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return View(listeparents);
         }
 
-        public IActionResult Privacy()
+        public ActionResult Delete(int id)
         {
-            return View();
+            Parent equipe = _BaseDonnees.Parents.Where(x => x.ParentId == id).FirstOrDefault();
+
+            return View(equipe);
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        // POST: GestionEnfantController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var parentasupprimer = _BaseDonnees.Parents.Where(x => x.ParentId == id).Single();
+            //supprimer l'enfant avec l'id passé en parametre de la
+            // BD et de la liste des enfants de son parent
+
+            if (ModelState.IsValid)
+            {
+                _BaseDonnees.Parents.Remove(parentasupprimer);
+                _BaseDonnees.SaveChanges();
+                return RedirectToAction("Index", "Home");
+            }
+            return View(parentasupprimer);
+
         }
 
     }
