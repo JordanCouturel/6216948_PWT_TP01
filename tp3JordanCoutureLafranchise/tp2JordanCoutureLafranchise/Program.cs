@@ -1,43 +1,43 @@
+using Microsoft.EntityFrameworkCore;
 using tp2JordanCoutureLafranchise.Models;
+using tp2JordanCoutureLafranchise.Models.Data;
 
-var builder = WebApplication.CreateBuilder(args); // Crée une web app avec les paramètres envoyés
-builder.Services.AddControllersWithViews(); // Permet MVC
-builder.Services.AddRazorPages(); // Permet utilisation de Razor
+var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<BaseDeDonnees>(); // Permet l'utilisation du Singleton
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(option => { option.IdleTimeout = TimeSpan.FromMinutes(20); });
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+// Injection des dépendances
+builder.Services.AddSingleton<BaseDeDonnees>();
+builder.Services.AddDbContext<HockeyRebelsDBContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 
 var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+    
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
-    app.UseStaticFiles(new StaticFileOptions
-    {
-        OnPrepareResponse = context => context.Context.Response.Headers.Add("Cache-Control", "no-cache")
-    });
-}
-else
-{
-    app.UseStaticFiles();
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
 }
 
-app.UseSession();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseRouting();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller}/{action}/{id?}",
-        defaults: new { controller = "Home", action = "Index" });
-});
 
-app.MapRazorPages();
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
 app.Run();
 
 // Doc
 // Environnements: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/environments?view=aspnetcore-7.0
 // Fichiers statiques et wwwroot : https://learn.microsoft.com/en-us/aspnet/core/fundamentals/static-files?view=aspnetcore-7.0
-// Gestion de la cache : https://learn.microsoft.com/en-us/aspnet/core/performance/caching/response?view=aspnetcore-7.0
+// Gestion de la cache : https://learn.microsoft.com/en-us/aspnet/core/performance/caching/response?view=aspnetcore-7.0on de la cache : https://learn.microsoft.com/en-us/aspnet/core/performance/caching/response?view=aspnetcore-7.0
