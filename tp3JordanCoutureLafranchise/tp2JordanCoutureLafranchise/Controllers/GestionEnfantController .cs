@@ -68,6 +68,8 @@ namespace tp2JordanCoutureLafranchise.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(EnfantVM enfantVM)
         {
+            
+
             if (ModelState.IsValid)
             {
                 enfantVM.Enfant.Equipe = _BaseDonnees.Parents.FirstOrDefault(p => p.ParentId == enfantVM.Enfant.ParentId)?.Nom;
@@ -90,31 +92,50 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
         public IActionResult Update(int id)
         {
-            var enfant = _BaseDonnees.Enfants.Where(x => x.Id == id).FirstOrDefault();
-            return View(enfant);
+            var enfantVM = new EnfantVM
+            {
+                Enfant = new Enfant()
+                
+            };
+            enfantVM.Enfant = _BaseDonnees.Enfants.Where(t => t.Id == id).SingleOrDefault();
+            enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
+            {
+                Text = t.Nom,
+                Value = t.ParentId.ToString()
+            }).OrderBy(t => t.Text);
+
+            return View(enfantVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Enfant enfant)
+        public IActionResult Update(EnfantVM enfantVM)
         {
+            ViewData["titre"] = "Ajouter un joueur";
+            //foreach (var parent in _BaseDonnees.Parents)
+            //{
+            //    if (parent.Nom == enfant.Equipe)
+            //    {
+            //        enfant.ParentId = parent.ParentId;
+            //    }
+            //}
 
-            foreach (var parent in _BaseDonnees.Parents)
-            {
-                if (parent.Nom == enfant.Equipe)
-                {
-                    enfant.ParentId = parent.ParentId;
-                }
-            }
-
+            enfantVM.Enfant.Equipe = _BaseDonnees.Parents.FirstOrDefault(p => p.ParentId == enfantVM.Enfant.ParentId)?.Nom;
             if (ModelState.IsValid)
             {
-
-                _BaseDonnees.Enfants.Update(enfant);
+                _BaseDonnees.Update(enfantVM.Enfant);
                 _BaseDonnees.SaveChanges();
-                return RedirectToAction("index", "home");
+                return RedirectToAction("index", "Home");
             }
-            return View(enfant);
+            enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
+            {
+                Text = t.Nom,
+                Value = t.ParentId.ToString()
+            }).OrderBy(t => t.Text);
+
+
+            return View(enfantVM);
+
         }
 
     }
