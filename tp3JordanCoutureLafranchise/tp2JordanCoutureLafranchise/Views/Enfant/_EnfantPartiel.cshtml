@@ -1,0 +1,12 @@
+@model Enfant
+
+
+<div class="circle">
+    <a asp-controller="enfant" asp-action="DetailParId" asp-route-Id="@Model.Id">
+        <img class="img-fluid" src="@Model.ImageURL" alt="Joueur">
+    </a>
+ 
+</div>
+<a asp-controller="gestionenfant" asp-action="delete" asp-route-id="@Model.Id"><img class="img-fluid iconepoubelle" style="height:30px; width:50px;" src="/images/trash-removebg-preview.png"></a>
+<p class="Nomjoueur" style="margin-top: 50px; margin-bottom: 0px;">@Model.Nom</p>
+<p class="equipejoueur">@Model.Equipe</p>

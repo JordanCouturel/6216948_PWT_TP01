@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<main>
+    <div class="bodydetails">
+        <div class="row titrepagedetails">
+            <h1 class="fontGras blanc" style="justify-content:center;">
+                <span>@Model.Nom</span>
+                @if (Model.EnVedette == "Oui")
+                {
+                    <i class="fa fa-star blanc" aria-hidden="true"></i>
+                }
+            </h1>
+        </div>
+        <div class="row infosetphoto" style="align-items: center;">
+            <div class="col-4 circledetails">
+                <img class="img-fluid" src="@Model.ImageURL" alt="alex ovechkin">
+            </div>
+            <div class="seperationline"></div>
+            <div class="col infos">
+                <div class="row">
+                    <div class="containernumerojoueur"> <h1 class="textenumjoueur">#@Model.NumeroDeChandail</h1></div>
+                    <div class="containernumerojoueur"> <h3 class="textenumjoueur">$@(Model.Salaire)M/An</h3></div>
+                    <div class="containernumerojoueur">@Model.Equipe</div>
+                </div>
+                <div class="row">
+                    <div class="col-auto" style="padding-left:0px; padding-right: 0px;">
+                        <div class="containernumerojoueur"> <h3 class="textenumjoueur">@Model.Age</h3></div>
+                        <div class="containernumerojoueur" style="margin-bottom:0px ;">
+                            <h3 class="textenumjoueur">@Model.Position</h3>
+                            <i class="fa fa-info-circle iconinfo" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="col-auto" style="padding-left:0px ;">
+                        <div class="containernumerojoueur1">
+                            <p>@Model.Description</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btnpagedetails">
+            <form action="AjouterUnEnfant" method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="Name" value="Alex Ovechkin">
+                <button type="submit" class="ajouterauxfavoris" asp-controller="favoris" asp-action="AjouterUnEnfant" asp-route-id="@Model.Id">
+
+                    AJOUTER AUX FAVORIS
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+
+
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</main>
