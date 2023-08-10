@@ -20,7 +20,7 @@ namespace tp2JordanCoutureLafranchise.Models
 
         [Display(Name = "URL de l'image")]
         [Required(ErrorMessage = "Entrez un URL")]
-        public string ImageURL { get; set; }
+        public string? ImageURL { get; set; }
 
 
         [Required(ErrorMessage = "Entrez un nom")]

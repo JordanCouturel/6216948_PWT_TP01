@@ -17,10 +17,15 @@ namespace tp2JordanCoutureLafranchise.Controllers
         }
 
 
+
+
         public ActionResult Delete(int id)
         {
             Enfant joueur = _BaseDonnees.Enfants.Where(x => x.Id == id).FirstOrDefault();
-
+            if(joueur.ImageURL==null)
+            {
+                joueur.ImageURL = "Equipe";
+            }
 
             return View(joueur);
         }
@@ -82,5 +87,37 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return View(enfantVM);
 
         }
+
+        public IActionResult Update(int id)
+        {
+            var enfant = _BaseDonnees.Enfants.Where(x => x.Id == id).FirstOrDefault();
+            return View(enfant);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Enfant enfant)
+        {
+
+            foreach (var parent in _BaseDonnees.Parents)
+            {
+                if (parent.Nom == enfant.Equipe)
+                {
+                    enfant.ParentId = parent.ParentId;
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                _BaseDonnees.Enfants.Update(enfant);
+                _BaseDonnees.SaveChanges();
+                return RedirectToAction("index", "home");
+            }
+            return View(enfant);
+        }
+
     }
+
+
 }
