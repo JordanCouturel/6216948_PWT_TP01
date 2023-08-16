@@ -6,21 +6,29 @@
 }
 
 <main>
-    <section class="hero-background">
-        <div class="background-text-hero">
+    <section class="hero-background2 row">
+       
+        <video class="col-12 video" playsinline autoplay muted loop poster="cake.jpg">
+                <source src="/Images/NHL Hockey Edit (2021) (4).mp4" type="video/webm">
+                Your browser does not support the video tag.
+
+              
+     
+        </video>
+
+        <div class="background-text-hero col-8">
             <div class="text-hero blanc">
                 <h2 class="fontgras">LES ÉQUIPES DE LA LNH</h2>
                 <H3 class="fontmedium" style="margin-bottom: 40px;">Découvrez l'univers captivant de la LNH et plongez<br> dans l'univers du hockey grâce à notre site web dédié,<br> mettant en avant les équipes légendaires.</H3>
                 <a href="/home/Create" class="boutonlistejoueurs">Ajouter une équipe</a>
-
-
             </div>
         </div>
+
     </section>
 
     <section class="equipes" style="background: linear-gradient(179.96deg, #2C2C2C 0.04%, #8E5529 56.15%, #000000 123.57%);">
         <div class="container-fluid entitesparent">
-            <div class="row">
+            <div class="row" style="margin-top:600px;">
                 @foreach (var equipe in Model)
                 {
                     <Partial name="_Equipe" for="@equipe"></Partial>

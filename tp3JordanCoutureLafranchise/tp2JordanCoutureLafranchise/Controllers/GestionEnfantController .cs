@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using tp2JordanCoutureLafranchise.Models;
 using tp2JordanCoutureLafranchise.ViewModels;
