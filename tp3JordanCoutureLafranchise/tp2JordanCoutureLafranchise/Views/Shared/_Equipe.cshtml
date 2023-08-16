@@ -10,7 +10,7 @@
         <h5 class="fontmedium">Nombre de joueurs : @((Model.Enfants.Count() == 0) ? "0" : (Model.Enfants.Count()))</h5>
 
 
-        @if (Model.Enfants == null)
+        @if (Model.Enfants.Count() == 0)
         {
             <h5 class="fontmedium">Salaire moyen : <i class="fa fa-usd" aria-hidden="true"></i>0M/Année</h5>
         }

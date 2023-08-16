@@ -108,6 +108,11 @@ a {
     height: 65vh;
 }
 
+.video{
+position:absolute;
+z-index:2;
+}
+
 .background-text-hero {
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.69) 0%, rgba(0, 0, 0, 0.5037) 33.85%, rgba(0, 0, 0, 0.4002) 64.58%, rgba(0, 0, 0, 0.69) 100%);
     box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -119,6 +124,13 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    left:217px;
+    top:115px;
+    z-index: 5;
+    opacity:75%;
+
+
 }
 
 .text-hero {
@@ -352,6 +364,16 @@ footer th, td {
     border-color: black;
 }
 
+.boutonlistejoueurs a:hover{
+    color:darkorange;
+    border:2px solid
+}
+
+.boutonlistejoueurs:hover{
+    border:2px solid orange;
+    color:black;
+}
+
 .circle {
     width: 175px;
     height: 175px;
@@ -374,6 +396,8 @@ footer th, td {
     justify-content: center;
     gap: 100px;
     position: relative;
+    grid-row-gap:0px;
+ 
 }
 
 .imgerreur {
@@ -525,6 +549,29 @@ footer th, td {
 .divnomjoueur {
     width: auto;
     height: auto;
+}
+
+.hero-background2{
+    position:relative;
+    top:0;
+    left:0;
+}
+
+.video-wrapper {
+    /* Telling our absolute positioned video to 
+  be relative to this element */
+    position: relative;
+    width: 400px;
+    height: 200px;
+    /* Will not allow the video to overflow the 
+  container */
+    overflow: hidden;
+    /* Centering the container's content vertically 
+  and horizontally */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .containerimageequipe {
@@ -978,6 +1025,7 @@ footer th, td {
     .boutonlistejoueurs {
         height: 60px;
         font-size: 22px;
+       
     }
 
     .carteEquipeBackground {
