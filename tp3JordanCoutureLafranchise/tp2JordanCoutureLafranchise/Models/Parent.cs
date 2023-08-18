@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace tp2JordanCoutureLafranchise.Models
 {
@@ -9,17 +9,18 @@ namespace tp2JordanCoutureLafranchise.Models
         [Key]
         public int ParentId { get; set; }
 
-
-        [Required(ErrorMessage = "Entrez un nom")]
-        [StringLength(35, ErrorMessage = "Le nom doit contenir moins de 36 caracteres")]
+        [DisplayName("Nom")]
+        [Required(ErrorMessage = "EnterName")]
+        [StringLength(35, ErrorMessage = "stringLengthValidationNom")]
         public string Nom { get; set; }
 
-        [Required(ErrorMessage = "Entrez une description")]
-        [StringLength(250, ErrorMessage = "La description doit contenir moins de 251 caracteres")]
+        [DisplayName("Description")]
+        [Required(ErrorMessage = "EnterDescription")]
+        [StringLength(250, ErrorMessage = "stringlengthvalidation")]
         public string Description { get; set; }
 
-
-        [Required(ErrorMessage = "Entrez un URL d'image")]
+        [DisplayName("URL de l'image")]
+        [Required(ErrorMessage = "EnterImageURL")]
         public string ImageURL { get; set; }
 
 

@@ -10,7 +10,6 @@ namespace tp2JordanCoutureLafranchise.Controllers
     {
 
         private HockeyRebelsDBContext _BaseDonnees { get; set; }
-
         public GestionEnfantController(HockeyRebelsDBContext BaseDeDonnees)
         {
             _BaseDonnees = BaseDeDonnees;

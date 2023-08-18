@@ -7,26 +7,26 @@
         <div class="imagesequipes"><img class="img-fluid carteequipeespaceentreimageettexte mt-5 " src="@Model.ImageURL" alt="logo pittsburgh"></div>
         <h3 class="fontgras">@Model.Nom</h3>
         <h4 class="verticalspacingcarteequipe fontmedium">@Html.Raw(Model.Description)</h4>
-        <h5 class="fontmedium">Nombre de joueurs : @((Model.Enfants.Count() == 0) ? "0" : (Model.Enfants.Count()))</h5>
+        <h5 class="fontmedium">@Locals["NbJoueurs"] : @((Model.Enfants.Count() == 0) ? "0" : (Model.Enfants.Count()))</h5>
 
 
         @if (Model.Enfants.Count() == 0)
         {
-            <h5 class="fontmedium">Salaire moyen : <i class="fa fa-usd" aria-hidden="true"></i>0M/Année</h5>
+            <h5 class="fontmedium">@Locals["Salaire moyen"] : <i class="fa fa-usd" aria-hidden="true"></i>@Locals["salaire0"]</h5>
         }
         else
         {
             @if (Model.Enfants.Any())
             {
                 <h5 class="fontmedium">
-                    Salaire moyen :
-                    <i class="fa fa-usd" aria-hidden="true"></i>@(Model.Enfants.Average(x => x.Salaire).ToString("0.00"))M/Année
+                    @Locals["Salaire moyen"]
+                    <i class="fa fa-usd" aria-hidden="true"></i>@(Model.Enfants.Average(x => x.Salaire).ToString("0.00"))@Locals["salaire"]
                 </h5>
             }
             else
             {
                 <h5 class="fontmedium">
-                    Salaire moyen : <i class="fa fa-usd" aria-hidden="true"></i>0M/Année
+                    @Locals["Salaire moyen"] <i class="fa fa-usd" aria-hidden="true"></i>@Locals["salaire0"]
                 </h5>
             }
         }
