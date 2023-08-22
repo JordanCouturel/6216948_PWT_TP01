@@ -135,7 +135,7 @@
   <data name="Position" xml:space="preserve">
     <value>Position</value>
   </data>
-  <data name="Salary" xml:space="preserve">
+  <data name="Salaire" xml:space="preserve">
     <value>Salary in $M / year</value>
   </data>
   <data name="URL de l'image" xml:space="preserve">
