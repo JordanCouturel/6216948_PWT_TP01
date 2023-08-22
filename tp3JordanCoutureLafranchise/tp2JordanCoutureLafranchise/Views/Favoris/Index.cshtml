@@ -1,0 +1,65 @@
+﻿@model List<Enfant>
+
+<main>
+    <div class="bodyfavoris">
+        <div class="titrepagefavoris">
+            <h1 class="fontGras blanc">Mes joueurs favoris</h1>
+            <i class="fa-solid fa-user fa-2x iconeuser fontGras"></i>
+            <h1 class="nbfavoris">@Model.Count()</h1>
+        </div>
+
+
+        <table class="tablefavoris col-xl-10" style="border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Nom</th>
+                    <th>Équipe</th>
+                    <th>Supprimer</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                @foreach (var joueur in Model)
+                {
+                    @if (@joueur.Id % 2 == 0)
+                    {
+                        <tr class="trstyle1">
+                            <td class="imagefavoris"><img class="img-fluid" src="@joueur.ImageURL" alt="alex ovechkin"></td>
+                            <td> <h3 class="fontmedium">@joueur.Nom</h3></td>
+                            <td><h3 class="fontmedium">@joueur.Equipe</h3></td>
+                            <td class="diviconetrash">
+                                <form action="SupprimerUnEnfant" method="post">
+                                    <input type="hidden" name="id" value="@joueur.Id" />
+                                    <input type="hidden" name="joueur" value="Alex Ovechkin">
+                                    <button type="submit" style="border: none;"> <a asp-route-id="@joueur.Id"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a></button>s
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr class="trstyle2">
+                            <td class="imagefavoris"><img class="img-fluid" src="@joueur.ImageURL" alt="alex ovechkin"></td>
+                            <td> <h3 class="fontmedium">@joueur.Nom</h3></td>
+                            <td><h3 class="fontmedium">@joueur.Equipe</h3></td>
+                            <td class="diviconetrash">
+                                <form action="SupprimerUnEnfant" method="post">
+                                    <input type="hidden" name="id" value="@joueur.Id" />
+                                    <input type="hidden" name="joueur" value="Alex Ovechkin">
+                                    <button type="submit" style="border: none;"> <a href="/favoris/index" @*asp-route-id="@joueur.Id"*@><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a></button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+</main>

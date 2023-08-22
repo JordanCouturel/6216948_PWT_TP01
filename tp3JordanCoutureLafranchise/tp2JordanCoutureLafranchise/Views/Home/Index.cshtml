@@ -1,0 +1,40 @@
+﻿@model List<Parent>
+@using tp2JordanCoutureLafranchise.Models;
+
+@{
+    ViewData["Title"] = @Locals["Accueil"];
+}
+
+<main>
+    <section class="hero-background2 row">
+       
+        <video class="col-12 video" playsinline autoplay muted loop poster="cake.jpg">
+                <source src="/Images/NHL Hockey Edit (2021) (4).mp4" type="video/webm">
+                Your browser does not support the video tag.
+
+              
+     
+        </video>
+
+        <div class="background-text-hero col-8">
+            <div class="text-hero blanc">
+                <h2 class="fontgras">@Locals["LES ÉQUIPES DE LA LNH"]</h2>
+                <H3 class="fontmedium" style="margin-bottom: 40px;">@Locals["description"]</H3>
+                <a href="/home/Create" class="boutonlistejoueurs">@Locals["btnAjouterEquipe"]</a>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="equipes" style="background: linear-gradient(179.96deg, #2C2C2C 0.04%, #8E5529 56.15%, #000000 123.57%);">
+        <div class="container-fluid entitesparent">
+            <div class="row" style="margin-top:600px;">
+                @foreach (var equipe in Model)
+                {
+                    <Partial name="_Equipe" for="@equipe"></Partial>
+                }
+            </div>
+        </div>
+    </section>
+
+</main>
