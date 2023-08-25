@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using tp3JordanCoutureLafranchise.Models;
 
 namespace tp2JordanCoutureLafranchise.Models
 {
@@ -27,6 +28,10 @@ namespace tp2JordanCoutureLafranchise.Models
         [ValidateNever]
         //propriété de navigation
         public virtual List<Enfant>? Enfants { get; set; }
+
+        //prop nav 1..1 DirecteurGeneral
+        public virtual DirecteurGeneral DirecteurGeneral { get; set; }
+
 
     }
 }

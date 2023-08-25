@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using tp3JordanCoutureLafranchise.Models;
 
 namespace tp2JordanCoutureLafranchise.Models.Data
 {
@@ -13,7 +14,7 @@ namespace tp2JordanCoutureLafranchise.Models.Data
 
         public DbSet<Enfant> Enfants { get; set; }
         public DbSet<Parent> Parents { get; set; }
-
+        public DbSet<DirecteurGeneral> DG { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -219,6 +220,25 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                 new Parent() { ParentId = 3, Nom = "Capitals de Washington", Description = "Équipe de hockey sur glace de la LNH basée à Washington", ImageURL = "/Images/capitals.png" }
                 );
 
+            modelBuilder.Entity<DirecteurGeneral>().HasData(
+                new DirecteurGeneral() { Id = 2, Prénom = "Kent", Nom = "Hughes", EquipeID = 2 },
+              new DirecteurGeneral() { Id = 3, Prénom = "Brian", Nom = "MacLellan", EquipeID = 3 },
+              new DirecteurGeneral() { Id = 1, Prénom = "Kyle", Nom = "Dubas", EquipeID = 1 }
+              );
+
+
+            modelBuilder.Entity<Entraineur>().HasData(
+                new Entraineur { Id = 1, NomComplet = "Claude Julien", Specialite = "Stratégie de jeu" },
+                new Entraineur { Id = 2, NomComplet = "Mike Babcock", Specialite = "Développement des joueurs" },
+                new Entraineur { Id = 3, NomComplet = "Joel Quenneville", Specialite = "Gestion des effectifs" },
+                new Entraineur { Id = 4, NomComplet = "Barry Trotz", Specialite = "Défense et système défensif" },
+                new Entraineur { Id = 5, NomComplet = "Bruce Cassidy", Specialite = "Attaque et jeu de puissance" },
+                new Entraineur { Id = 6, NomComplet = "Alain Vigneault", Specialite = "Gestion des ressources humaines" },
+                new Entraineur { Id = 7, NomComplet = "Peter DeBoer", Specialite = "Gestion des gardiens de but" },
+                new Entraineur { Id = 8, NomComplet = "John Tortorella", Specialite = "Leadership et motivation" },
+                new Entraineur { Id = 9, NomComplet = "Paul Maurice", Specialite = "Gestion du vestiaire" },
+                new Entraineur { Id = 10, NomComplet = "Travis Green", Specialite = "Développement des jeunes joueurs" }
+            );
 
         }
 

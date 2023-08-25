@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using tp3JordanCoutureLafranchise.Models;
 
 namespace tp2JordanCoutureLafranchise.Models
 {
@@ -63,6 +63,10 @@ namespace tp2JordanCoutureLafranchise.Models
         [Display(Name = "Favoris")]
         [Required(ErrorMessage = "Indiquez si le joueur est dans les favoris")]
         public bool Favoris { get; set; }
+        
+
+        //PROP NAV  
+        public virtual List<Entraineur> Entraineurs { get; set; }
 
 
     }
