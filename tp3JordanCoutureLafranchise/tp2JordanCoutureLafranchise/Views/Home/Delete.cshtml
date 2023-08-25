@@ -1,13 +1,13 @@
 ﻿@model tp2JordanCoutureLafranchise.Models.Parent
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = @Locals["Title"];
 }
 <div style="background: linear-gradient(180deg, #323130 0%, #885229 51.04%, #000 100%);">
     <div style="padding:30px;">
-        <h1 style="color:white;">Supprimer</h1>
+        <h1 style="color:white;">@Locals["Supprimer"]</h1>
 
-        <h3 style="color:white;">Êtes vous certain de vouloir supprimer cette équipe?</h3>
+        <h3 style="color:white;">@Locals["Messageconfirmation"]</h3>
         <div>
 
             <hr />
@@ -36,7 +36,7 @@
             </dl>
 
             <form asp-action="Delete">
-                <input type="submit" value="Delete" class="btn btn-danger" />
+                <input type="submit" value=@Locals["btnDelete"] class="btn btn-danger" />
 
             </form>
         </div>

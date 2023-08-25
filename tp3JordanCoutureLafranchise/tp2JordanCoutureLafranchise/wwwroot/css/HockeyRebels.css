@@ -11,6 +11,35 @@ header {
     padding-right: 3%;
 }
 
+
+
+
+.iconinfo {
+    font-size: 24px;
+    color: #007bff; /* Change the color as desired */
+    cursor: pointer;
+}
+
+.tooltip-text {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 300px;
+    top: -40px;
+    left: 40px;
+    z-index: 1;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.tooltip-container:hover .tooltip-text {
+    opacity: 1;
+    visibility: visible;
+}
 .iconedit {
     position: absolute;
     right: 12px;

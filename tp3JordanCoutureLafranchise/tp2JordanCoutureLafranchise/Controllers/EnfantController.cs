@@ -123,9 +123,9 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return View("detail", enfant);
         }
 
-        [Route("enfant/detail/{nom}")]
-        [Route("enfant/{nom}")]
-        [Route("{nom}")]
+        //[Route("enfant/detail/{nom}")]
+        //[Route("enfant/{nom}")]
+        ////[Route("{nom}")]
         public IActionResult DetailParNom(string nom)
         {
             ViewData["titre"] = "Détails";

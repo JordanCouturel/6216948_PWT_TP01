@@ -29,7 +29,20 @@
                         <div class="containernumerojoueur"> <h3 class="textenumjoueur">@Model.Age</h3></div>
                         <div class="containernumerojoueur" style="margin-bottom:0px ;">
                             <h3 class="textenumjoueur">@Model.Position</h3>
-                            <i class="fa fa-info-circle iconinfo" aria-hidden="true"></i>
+                            <div class="tooltip-container">
+                                <i class="fa fa-info-circle iconinfo" aria-hidden="true"></i>
+                                <div class="tooltip-text row ">
+                                    <div class="col-12">
+                                        <p>C : Centre</p>
+                                        <p>AD : Attaquant droit</p>
+                                        <p>AG : Attaquant gauche</p>
+                                        <p>DD : Défenseur droit</p>
+                                        <p>DG : Défenseur gauche</p>
+                                        <p>G : Gardien de but</p>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-auto" style="padding-left:0px ;">
@@ -57,5 +70,5 @@
 
         </div>
     </div>
-
+    <script src="~/js/site.js"></script>
 </main>

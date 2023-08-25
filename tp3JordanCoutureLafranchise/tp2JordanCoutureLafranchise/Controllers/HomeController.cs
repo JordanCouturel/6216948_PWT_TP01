@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.Diagnostics;
 using tp2JordanCoutureLafranchise.Models;
 using tp2JordanCoutureLafranchise.Models.Data;
@@ -9,17 +11,18 @@ namespace tp2JordanCoutureLafranchise.Controllers
     {
 
         private HockeyRebelsDBContext _BaseDonnees { get; set; }
+        private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(HockeyRebelsDBContext BaseDeDonnees)
+        public HomeController(HockeyRebelsDBContext BaseDeDonnees,IStringLocalizer<HomeController> localizer)
         {
             _BaseDonnees = BaseDeDonnees;
+            _localizer = localizer;
         }
-
 
 
         public IActionResult Index()
         {
-            ViewData["titre"] = "Accueil";
+            ViewData["Title"] = this._localizer["HomeIndexTitle"];
             var listeparents = _BaseDonnees.Parents.ToList();
 
 
@@ -99,5 +102,21 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return View(parent);
         }
 
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            var cookie = CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture));
+            var name = CookieRequestCultureProvider.DefaultCookieName;
+
+            Response.Cookies.Append(name, cookie, new CookieOptions
+            {
+                Path = "/",
+                Expires = DateTimeOffset.UtcNow.AddYears(1),
+            });
+
+            return LocalRedirect(returnUrl);
+        }
+
+    
     }
 }

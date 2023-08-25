@@ -15,8 +15,6 @@
             <form asp-action="Update">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="col-6">
-                    @* <input type="hidden" asp-for="@Model.Enfant.ParentId" />
-                    <input type="hidden" asp-for="@Model.Enfant.Id" />*@
                     <div class="form-group " style="padding-bottom:15px;">
                         <label asp-for="@Model.Enfant.Nom" class="control-label"></label>
                         <input asp-for="@Model.Enfant.Nom" class="form-control mb-2" />
@@ -86,7 +84,8 @@
                         </div>
                         <div class="form-group form-check " style="padding-bottom:15px;">
                             <label class="form-check-label">
-                                <input class="form-check-input" asp-for="@Model.Enfant.Favoris" /> @Html.DisplayNameFor(model => model.Enfant.Favoris)
+                                <input class="form-check-input" asp-for="@Model.Enfant.Favoris" />
+                                @Html.DisplayNameFor(model => model.Enfant.Favoris)
                             </label>
                         </div>
                     <div class="form-group">

@@ -2,7 +2,7 @@
 @using tp2JordanCoutureLafranchise.Models;
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = @Locals["Accueil"];
 }
 
 <main>
@@ -18,9 +18,9 @@
 
         <div class="background-text-hero col-8">
             <div class="text-hero blanc">
-                <h2 class="fontgras">LES ÉQUIPES DE LA LNH</h2>
-                <H3 class="fontmedium" style="margin-bottom: 40px;">Découvrez l'univers captivant de la LNH et plongez<br> dans l'univers du hockey grâce à notre site web dédié,<br> mettant en avant les équipes légendaires.</H3>
-                <a href="/home/Create" class="boutonlistejoueurs">Ajouter une équipe</a>
+                <h2 class="fontgras">@Locals["LES ÉQUIPES DE LA LNH"]</h2>
+                <H3 class="fontmedium" style="margin-bottom: 40px;">@Locals["description"]</H3>
+                <a href="/home/Create" class="boutonlistejoueurs">@Locals["btnAjouterEquipe"]</a>
             </div>
         </div>
 
