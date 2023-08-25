@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tp2JordanCoutureLafranchise.Models.Data;
 
@@ -11,9 +12,10 @@ using tp2JordanCoutureLafranchise.Models.Data;
 namespace tp3JordanCoutureLafranchise.Migrations
 {
     [DbContext(typeof(HockeyRebelsDBContext))]
-    partial class HockeyRebelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230825174750_AjoutModelEntraineur_relation_PlusieursAplusieurs")]
+    partial class AjoutModelEntraineur_relation_PlusieursAplusieurs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

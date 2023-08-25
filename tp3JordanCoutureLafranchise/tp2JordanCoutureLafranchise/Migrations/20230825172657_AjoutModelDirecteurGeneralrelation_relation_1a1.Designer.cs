@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tp2JordanCoutureLafranchise.Models.Data;
 
@@ -11,9 +12,10 @@ using tp2JordanCoutureLafranchise.Models.Data;
 namespace tp3JordanCoutureLafranchise.Migrations
 {
     [DbContext(typeof(HockeyRebelsDBContext))]
-    partial class HockeyRebelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230825172657_AjoutModelDirecteurGeneralrelation_relation_1a1")]
+    partial class AjoutModelDirecteurGeneralrelation_relation_1a1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace tp3JordanCoutureLafranchise.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("EnfantEntraineur", b =>
-                {
-                    b.Property<int>("EntraineursId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JoueursId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EntraineursId", "JoueursId");
-
-                    b.HasIndex("JoueursId");
-
-                    b.ToTable("EnfantEntraineur");
-                });
 
             modelBuilder.Entity("tp2JordanCoutureLafranchise.Models.Enfant", b =>
                 {
@@ -374,104 +361,6 @@ namespace tp3JordanCoutureLafranchise.Migrations
                             Nom = "Dubas",
                             Prénom = "Kyle"
                         });
-                });
-
-            modelBuilder.Entity("tp3JordanCoutureLafranchise.Models.Entraineur", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("NomComplet")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Specialite")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Entraineur");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            NomComplet = "Claude Julien",
-                            Specialite = "Stratégie de jeu"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            NomComplet = "Mike Babcock",
-                            Specialite = "Développement des joueurs"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            NomComplet = "Joel Quenneville",
-                            Specialite = "Gestion des effectifs"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            NomComplet = "Barry Trotz",
-                            Specialite = "Défense et système défensif"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            NomComplet = "Bruce Cassidy",
-                            Specialite = "Attaque et jeu de puissance"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            NomComplet = "Alain Vigneault",
-                            Specialite = "Gestion des ressources humaines"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            NomComplet = "Peter DeBoer",
-                            Specialite = "Gestion des gardiens de but"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            NomComplet = "John Tortorella",
-                            Specialite = "Leadership et motivation"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            NomComplet = "Paul Maurice",
-                            Specialite = "Gestion du vestiaire"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            NomComplet = "Travis Green",
-                            Specialite = "Développement des jeunes joueurs"
-                        });
-                });
-
-            modelBuilder.Entity("EnfantEntraineur", b =>
-                {
-                    b.HasOne("tp3JordanCoutureLafranchise.Models.Entraineur", null)
-                        .WithMany()
-                        .HasForeignKey("EntraineursId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tp2JordanCoutureLafranchise.Models.Enfant", null)
-                        .WithMany()
-                        .HasForeignKey("JoueursId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("tp2JordanCoutureLafranchise.Models.Enfant", b =>
