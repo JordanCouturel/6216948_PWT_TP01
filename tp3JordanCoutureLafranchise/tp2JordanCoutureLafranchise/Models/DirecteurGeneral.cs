@@ -18,7 +18,7 @@ namespace tp3JordanCoutureLafranchise.Models
         [ForeignKey("Parent")]
         public int EquipeID { get; set; }
 
-        public virtual Parent Equipe { get; set; }
+        public virtual Parent? Equipe { get; set; }
 
     }
 }

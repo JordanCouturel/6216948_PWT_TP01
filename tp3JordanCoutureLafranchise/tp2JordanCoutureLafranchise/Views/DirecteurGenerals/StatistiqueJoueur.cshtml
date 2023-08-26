@@ -1,0 +1,25 @@
+﻿@model List<StatistiquesVM>
+
+
+<div class="container">
+    <h2>Statistiques des joueurs</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom du joueur</th>
+                <th>Nombre d'entraîneurs'</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entraineurStats in Model)
+            {
+                <tr>
+                    <td>@entraineurStats.Joueur.Nom</td>
+                    <td>@entraineurStats.NbEntraineurs</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p>Moyenne des enfants par entraîneur: @ViewData["MoyenneEntraineurParEnfants"]</p>
+</div>
