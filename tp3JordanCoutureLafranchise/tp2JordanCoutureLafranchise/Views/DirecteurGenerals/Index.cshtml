@@ -1,0 +1,47 @@
+﻿@model IEnumerable<tp3JordanCoutureLafranchise.Models.DirecteurGeneral>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Liste des directeurs générals</h1>
+
+<div style="color:orange; text-align:end; padding-right:50px;">
+    <a class="btn btn-primary"asp-action="Create">Ajouter un DG</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prénom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipe)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prénom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Equipe.Nom)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

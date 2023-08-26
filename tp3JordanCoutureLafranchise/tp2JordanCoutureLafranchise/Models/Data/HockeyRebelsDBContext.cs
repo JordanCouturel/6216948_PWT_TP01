@@ -7,18 +7,22 @@ namespace tp2JordanCoutureLafranchise.Models.Data
 {
     public class HockeyRebelsDBContext : DbContext
     {
-        public HockeyRebelsDBContext(DbContextOptions<HockeyRebelsDBContext> options) : base(options)
+        private readonly ILogger<HockeyRebelsDBContext> _logger;
+        public HockeyRebelsDBContext(DbContextOptions<HockeyRebelsDBContext> options,ILogger<HockeyRebelsDBContext> logger) : base(options)
         {
+            _logger = logger;
+
         }
 
 
         public DbSet<Enfant> Enfants { get; set; }
         public DbSet<Parent> Parents { get; set; }
         public DbSet<DirecteurGeneral> DG { get; set; }
+        public DbSet<Entraineur> Entraineur { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Enfant>().HasData(
+           var enfants= modelBuilder.Entity<Enfant>().HasData(
 
                   new Enfant()
                   {
@@ -34,7 +38,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                       Position = "C",
                       Salaire = 8,
                       Equipe = "Canadiens de Montréal",
-                      EnVedette = "Oui"
+                      EnVedette = "Oui",
+                      Entraineurs = new List<Entraineur>()
                   },
 
                    new Enfant()
@@ -50,7 +55,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                        Position = "AD",
                        Salaire = 5,
                        Equipe = "Canadiens de Montréal",
-                       EnVedette = "Oui"
+                       EnVedette = "Oui",
+                       Entraineurs = new List<Entraineur>()
                    },
 
                     new Enfant()
@@ -66,7 +72,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "G",
                         Salaire = 4,
                         Equipe = "Canadiens de Montréal",
-                        EnVedette = "Non"
+                        EnVedette = "Non",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -82,7 +89,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Salaire = 3,
                         Position = "AD",
                         Equipe = "Canadiens de Montréal",
-                        EnVedette = "Oui"
+                        EnVedette = "Oui",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -98,7 +106,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "AD",
                         Salaire = 5,
                         Equipe = "Capitals de Washington",
-                        EnVedette = "Non"
+                        EnVedette = "Non",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -114,7 +123,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "D",
                         Salaire = 1,
                         Equipe = "Capitals de Washington",
-                        EnVedette = "Non"
+                        EnVedette = "Non",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -130,7 +140,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "AG",
                         Salaire = 9,
                         Equipe = "Capitals de Washington",
-                        EnVedette = "Non"
+                        EnVedette = "Non",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -146,7 +157,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "D",
                         Salaire = 3,
                         Equipe = "Capitals de Washington",
-                        EnVedette = "Non"
+                        EnVedette = "Non",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -162,7 +174,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "D",
                         Salaire = 4,
                         Equipe = "Penguins de Pittsburgh",
-                        EnVedette = "Oui"
+                        EnVedette = "Oui",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -178,7 +191,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "D",
                         Salaire = 3,
                         Equipe = "Penguins de Pittsburgh",
-                        EnVedette = "Oui"
+                        EnVedette = "Oui",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                     new Enfant()
@@ -194,7 +208,8 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                         Position = "AD",
                         Salaire = 6,
                         Equipe = "Penguins de Pittsburgh",
-                        EnVedette = "Oui"
+                        EnVedette = "Oui",
+                        Entraineurs = new List<Entraineur>()
                     },
 
                      new Enfant()
@@ -210,9 +225,11 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                          Position = "C",
                          Salaire = 3,
                          Equipe = "Penguins de Pittsburgh",
-                         EnVedette = "Oui"
+                         EnVedette = "Oui",
+                         Entraineurs= new List<Entraineur>()
+                         
                      }
-                        );
+                        );;
 
             modelBuilder.Entity<Parent>().HasData(
                   new Parent() { ParentId = 1, Nom = "Penguins de Pittsburgh", Description = "Équipe de hockey sur glace de la LNH basée à Pittsburgh", ImageURL = "/Images/pittsburgh.png" },
@@ -228,19 +245,25 @@ namespace tp2JordanCoutureLafranchise.Models.Data
 
 
             modelBuilder.Entity<Entraineur>().HasData(
-                new Entraineur { Id = 1, NomComplet = "Claude Julien", Specialite = "Stratégie de jeu" },
-                new Entraineur { Id = 2, NomComplet = "Mike Babcock", Specialite = "Développement des joueurs" },
-                new Entraineur { Id = 3, NomComplet = "Joel Quenneville", Specialite = "Gestion des effectifs" },
-                new Entraineur { Id = 4, NomComplet = "Barry Trotz", Specialite = "Défense et système défensif" },
-                new Entraineur { Id = 5, NomComplet = "Bruce Cassidy", Specialite = "Attaque et jeu de puissance" },
-                new Entraineur { Id = 6, NomComplet = "Alain Vigneault", Specialite = "Gestion des ressources humaines" },
-                new Entraineur { Id = 7, NomComplet = "Peter DeBoer", Specialite = "Gestion des gardiens de but" },
-                new Entraineur { Id = 8, NomComplet = "John Tortorella", Specialite = "Leadership et motivation" },
-                new Entraineur { Id = 9, NomComplet = "Paul Maurice", Specialite = "Gestion du vestiaire" },
-                new Entraineur { Id = 10, NomComplet = "Travis Green", Specialite = "Développement des jeunes joueurs" }
+                new Entraineur { Id = 1, NomComplet = "Claude Julien", Specialite = "Stratégie de jeu",Joueurs= new List<Enfant>() {  } },
+                new Entraineur { Id = 2, NomComplet = "Mike Babcock", Specialite = "Développement des joueurs", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 3, NomComplet = "Joel Quenneville", Specialite = "Gestion des effectifs", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 4, NomComplet = "Barry Trotz", Specialite = "Défense et système défensif", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 5, NomComplet = "Bruce Cassidy", Specialite = "Attaque et jeu de puissance", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 6, NomComplet = "Alain Vigneault", Specialite = "Gestion des ressources humaines", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 7, NomComplet = "Peter DeBoer", Specialite = "Gestion des gardiens de but", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 8, NomComplet = "John Tortorella", Specialite = "Leadership et motivation", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 9, NomComplet = "Paul Maurice", Specialite = "Gestion du vestiaire", Joueurs = new List<Enfant>() },
+                new Entraineur { Id = 10, NomComplet = "Travis Green", Specialite = "Développement des jeunes joueurs", Joueurs = new List<Enfant>() }
             );
 
+
+
+
+
         }
+
+    
 
 
     }

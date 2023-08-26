@@ -4,6 +4,7 @@ using Microsoft.Extensions.Localization;
 using System.Diagnostics;
 using tp2JordanCoutureLafranchise.Models;
 using tp2JordanCoutureLafranchise.Models.Data;
+using tp3JordanCoutureLafranchise.ViewModels;
 
 namespace tp2JordanCoutureLafranchise.Controllers
 {
@@ -117,6 +118,8 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return LocalRedirect(returnUrl);
         }
 
-    
+
+      
+
     }
 }
