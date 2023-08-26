@@ -18,7 +18,7 @@ namespace tp2JordanCoutureLafranchise.Models
         [DisplayName("Description")]
         [Required(ErrorMessage = "EnterDescription")]
         [StringLength(250, ErrorMessage = "stringlengthvalidation")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [DisplayName("URL de l'image")]
         [Required(ErrorMessage = "EnterImageURL")]
@@ -30,7 +30,7 @@ namespace tp2JordanCoutureLafranchise.Models
         public virtual List<Enfant>? Enfants { get; set; }
 
         //prop nav 1..1 DirecteurGeneral
-        public virtual DirecteurGeneral DirecteurGeneral { get; set; }
+        public virtual DirecteurGeneral? DirecteurGeneral { get; set; }
 
 
     }

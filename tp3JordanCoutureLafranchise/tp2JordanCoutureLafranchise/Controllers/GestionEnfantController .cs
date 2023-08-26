@@ -3,16 +3,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using tp2JordanCoutureLafranchise.Models;
 using tp2JordanCoutureLafranchise.ViewModels;
 using tp2JordanCoutureLafranchise.Models.Data;
+using tp3JordanCoutureLafranchise.Models;
+using tp3JordanCoutureLafranchise.ViewModels;
+using tp3JordanCoutureLafranchise.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace tp2JordanCoutureLafranchise.Controllers
 {
     public class GestionEnfantController : Controller
     {
-
+        private ILogger<GestionEnfantController> _logger;
         private HockeyRebelsDBContext _BaseDonnees { get; set; }
-        public GestionEnfantController(HockeyRebelsDBContext BaseDeDonnees)
+        public GestionEnfantController(HockeyRebelsDBContext BaseDeDonnees, ILogger<GestionEnfantController> logger)
         {
             _BaseDonnees = BaseDeDonnees;
+            _logger = logger;
         }
 
 
@@ -76,6 +81,10 @@ namespace tp2JordanCoutureLafranchise.Controllers
                 ViewData["titre"] = "Ajouter un joueur";
                 _BaseDonnees.Add(enfantVM.Enfant);
                 _BaseDonnees.SaveChanges();
+
+                // Enregistrement de l'action dans le ILogger
+                _logger.LogInformation($"{enfantVM.Enfant.Nom} ajouté avec succès");
+
                 return RedirectToAction("index", "Home");
             }
             enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
@@ -111,19 +120,16 @@ namespace tp2JordanCoutureLafranchise.Controllers
         public IActionResult Update(EnfantVM enfantVM)
         {
             ViewData["titre"] = "Ajouter un joueur";
-            //foreach (var parent in _BaseDonnees.Parents)
-            //{
-            //    if (parent.Nom == enfant.Equipe)
-            //    {
-            //        enfant.ParentId = parent.ParentId;
-            //    }
-            //}
+           
 
             enfantVM.Enfant.Equipe = _BaseDonnees.Parents.FirstOrDefault(p => p.ParentId == enfantVM.Enfant.ParentId)?.Nom;
             if (ModelState.IsValid)
             {
                 _BaseDonnees.Update(enfantVM.Enfant);
                 _BaseDonnees.SaveChanges();
+
+                // Enregistrement de l'action dans le ILogger
+                _logger.LogInformation($"{enfantVM.Enfant.Nom} mis a jour avec succès");
                 return RedirectToAction("index", "Home");
             }
             enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
@@ -136,6 +142,8 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return View(enfantVM);
 
         }
+
+     
 
     }
 

@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/jpg" href="/images/logo.jpg">
-
+   @* <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
 
 
 
@@ -32,13 +32,28 @@
                 <img class="logo img-fluid" src="/Images/logo.jpg" alt="logo">
             </a>
         </div>
-        <nav>
-            <ul class="nav_liens">
+       @* <nav>*@
+        @*    <ul class="nav_liens">
                 <li> <a class="nav_liens" asp-controller="Enfant" asp-action="Recherche">Recherche</a> </li>
                 <li class="nav_liens"> <a style="color:white;" href="/favoris/index">Favoris</a></li>
-
+                <li class="nav_liens"> <a style="color:white;" href="/DirecteurGenerals/index">DG</a></li>
             </ul>
-        </nav>
+*@
+            <div class="dropdown">
+            <button class="dropbtn"><i class="fa fa-2x fa-chevron-circle-down" aria-hidden="true"></i></button>
+                <div class="dropdown-content">
+                    <a asp-controller="Enfant" asp-action="Recherche">Recherche</a>
+                    <a href="/favoris/index">Favoris</a>
+                    <a href="/DirecteurGenerals/index">DG</a>
+                <a href="/Entraineurs/index">Entraineurs</a>
+                <a href="/directeurgenerals/StatistiqueEntraineur">Statistiques des entraineurs</a>
+                <a href="/directeurgenerals/StatistiqueJoueur">Statistique des joueurs</a>
+                </div>
+            </div>
+
+
+
+       @* </nav>*@
         <div class="bouton">
             <a class="Bouton" href="/gestionenfant/create"><i class="fa-solid fa-user-plus blanc fa-2x"></i></a>
         </div>
@@ -82,8 +97,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
     <script>
@@ -125,6 +142,29 @@
                
                 isAnimated = false;
             }
+        });
+
+        var data = {
+            labels: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin"],
+            datasets: [{
+                label: "Ventes mensuelles",
+                data: [120, 150, 180, 130, 200, 160],
+                backgroundColor: "rgba(75, 192, 192, 0.6)"
+            }]
+        };
+
+        // Configurer le graphique à barres
+        var options = {
+            responsive: true,
+            maintainAspectRatio: false
+        };
+
+        // Créer le graphique
+        var ctx = document.getElementById("barChart").getContext("2d");
+        var myBarChart = new Chart(ctx, {
+            type: "bar",
+            data: data,
+            options: options
         });
 
     
