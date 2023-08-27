@@ -7,6 +7,8 @@ using tp3JordanCoutureLafranchise.Models;
 using tp3JordanCoutureLafranchise.ViewModels;
 using tp3JordanCoutureLafranchise.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace tp2JordanCoutureLafranchise.Controllers
 {
@@ -36,6 +38,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
         // POST: GestionEnfantController/Delete/5
         [HttpPost]
+        [Authorize(Roles = "User")]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
@@ -69,6 +72,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(EnfantVM enfantVM)
         {
@@ -116,6 +120,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(EnfantVM enfantVM)
         {

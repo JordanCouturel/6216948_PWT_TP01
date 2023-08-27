@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tp2JordanCoutureLafranchise.Models.Data;
 
@@ -11,9 +12,10 @@ using tp2JordanCoutureLafranchise.Models.Data;
 namespace tp3JordanCoutureLafranchise.Migrations
 {
     [DbContext(typeof(HockeyRebelsDBContext))]
-    partial class HockeyRebelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230827162115_AjoutEnfantEntraineurs")]
+    partial class AjoutEnfantEntraineurs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace tp3JordanCoutureLafranchise.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("EnfantEntraineur", b =>
+                {
+                    b.Property<int>("EntraineursId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JoueursId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EntraineursId", "JoueursId");
+
+                    b.HasIndex("JoueursId");
+
+                    b.ToTable("EnfantEntraineur");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -585,7 +602,7 @@ namespace tp3JordanCoutureLafranchise.Migrations
 
                     b.HasIndex("EntraineurId");
 
-                    b.ToTable("EnfantEntraineur");
+                    b.ToTable("EnfantEntraineurs");
 
                     b.HasData(
                         new
@@ -593,60 +610,6 @@ namespace tp3JordanCoutureLafranchise.Migrations
                             Id = 1,
                             EnfantId = 1,
                             EntraineurId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            EnfantId = 2,
-                            EntraineurId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            EnfantId = 3,
-                            EntraineurId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            EnfantId = 4,
-                            EntraineurId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            EnfantId = 5,
-                            EntraineurId = 5
-                        },
-                        new
-                        {
-                            Id = 6,
-                            EnfantId = 6,
-                            EntraineurId = 6
-                        },
-                        new
-                        {
-                            Id = 7,
-                            EnfantId = 7,
-                            EntraineurId = 7
-                        },
-                        new
-                        {
-                            Id = 8,
-                            EnfantId = 8,
-                            EntraineurId = 8
-                        },
-                        new
-                        {
-                            Id = 9,
-                            EnfantId = 9,
-                            EntraineurId = 9
-                        },
-                        new
-                        {
-                            Id = 10,
-                            EnfantId = 10,
-                            EntraineurId = 10
                         });
                 });
 
@@ -742,6 +705,21 @@ namespace tp3JordanCoutureLafranchise.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("EnfantEntraineur", b =>
+                {
+                    b.HasOne("tp3JordanCoutureLafranchise.Models.Entraineur", null)
+                        .WithMany()
+                        .HasForeignKey("EntraineursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("tp2JordanCoutureLafranchise.Models.Enfant", null)
+                        .WithMany()
+                        .HasForeignKey("JoueursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

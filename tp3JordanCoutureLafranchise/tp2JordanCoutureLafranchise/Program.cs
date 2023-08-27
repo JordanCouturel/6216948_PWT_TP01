@@ -5,6 +5,8 @@ using Microsoft.Extensions.Options;
 using System.Globalization;
 using tp2JordanCoutureLafranchise.Models.Data;
 using Microsoft.AspNetCore.Identity;
+using tp3JordanCoutureLafranchise.DbInitialiser;
+using tp3JordanCoutureLafranchise.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,9 +32,12 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
     options.SupportedUICultures = supportedCultures;
 });
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<HockeyRebelsDBContext>();
+
 builder.Services.AddRazorPages();
+
+
 
 //// Injection des dépendances
 //builder.Services.AddSingleton<BaseDeDonnees>();
@@ -40,6 +45,14 @@ builder.Services.AddDbContext<HockeyRebelsDBContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
 
 
+builder.Services.AddScoped<IdBInitialiser, DbInitializer>();
+builder.Services.AddScoped(typeof(IServiceBaseAsync<>), typeof(ServiceBaseAsync<>));
+builder.Services.AddScoped<IParentService, ParentService>();
+builder.Services.ConfigureApplicationCookie(options => {
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
 
 
 
@@ -62,6 +75,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();;
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IdBInitialiser>();
+        dbInitializer.Initialize();
+    }
+}
+
+SeedDatabase();
 
 app.UseAuthorization();
 

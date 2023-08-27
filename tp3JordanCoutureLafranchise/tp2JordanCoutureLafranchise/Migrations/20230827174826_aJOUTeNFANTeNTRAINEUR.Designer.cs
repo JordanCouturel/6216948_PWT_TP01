@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tp2JordanCoutureLafranchise.Models.Data;
 
@@ -11,9 +12,10 @@ using tp2JordanCoutureLafranchise.Models.Data;
 namespace tp3JordanCoutureLafranchise.Migrations
 {
     [DbContext(typeof(HockeyRebelsDBContext))]
-    partial class HockeyRebelsDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230827174826_aJOUTeNFANTeNTRAINEUR")]
+    partial class aJOUTeNFANTeNTRAINEUR
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace tp3JordanCoutureLafranchise.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("EnfantEntraineur", b =>
+                {
+                    b.Property<int>("EntraineursId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JoueursId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EntraineursId", "JoueursId");
+
+                    b.HasIndex("JoueursId");
+
+                    b.ToTable("EnfantEntraineur");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -585,7 +602,7 @@ namespace tp3JordanCoutureLafranchise.Migrations
 
                     b.HasIndex("EntraineurId");
 
-                    b.ToTable("EnfantEntraineur");
+                    b.ToTable("EnfantEntraineurs");
 
                     b.HasData(
                         new
@@ -742,6 +759,21 @@ namespace tp3JordanCoutureLafranchise.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("EnfantEntraineur", b =>
+                {
+                    b.HasOne("tp3JordanCoutureLafranchise.Models.Entraineur", null)
+                        .WithMany()
+                        .HasForeignKey("EntraineursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("tp2JordanCoutureLafranchise.Models.Enfant", null)
+                        .WithMany()
+                        .HasForeignKey("JoueursId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

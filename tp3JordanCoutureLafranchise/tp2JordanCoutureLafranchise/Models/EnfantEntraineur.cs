@@ -16,7 +16,7 @@ namespace tp3JordanCoutureLafranchise.Models
         public int EntraineurId { get; set; }
 
         // Navigation properties
-        public Enfant Enfant { get; set; }
-        public Entraineur Entraineur { get; set; }
+        public virtual Enfant Enfant { get; set; }
+        public virtual Entraineur Entraineur { get; set; }
     }
 }

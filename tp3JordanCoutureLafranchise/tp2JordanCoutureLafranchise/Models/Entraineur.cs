@@ -13,6 +13,6 @@ namespace tp3JordanCoutureLafranchise.Models
         public string Specialite { get; set; }
 
         //prop nav
-        public virtual List<Enfant> Joueurs { get; set; }
+        public virtual ICollection<Enfant> Joueurs { get; set; }
     }
 }
