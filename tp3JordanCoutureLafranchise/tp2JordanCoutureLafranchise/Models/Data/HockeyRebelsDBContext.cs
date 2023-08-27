@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using tp3JordanCoutureLafranchise.Models;
 
 namespace tp2JordanCoutureLafranchise.Models.Data
 {
-    public class HockeyRebelsDBContext : DbContext
+    public class HockeyRebelsDBContext : IdentityDbContext<IdentityUser>
     {
         private readonly ILogger<HockeyRebelsDBContext> _logger;
         public HockeyRebelsDBContext(DbContextOptions<HockeyRebelsDBContext> options,ILogger<HockeyRebelsDBContext> logger) : base(options)
@@ -20,9 +22,17 @@ namespace tp2JordanCoutureLafranchise.Models.Data
         public DbSet<DirecteurGeneral> DG { get; set; }
         public DbSet<Entraineur> Entraineur { get; set; }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           var enfants= modelBuilder.Entity<Enfant>().HasData(
+
+            base.OnModelCreating(modelBuilder);
+
+
+
+            var enfants = modelBuilder.Entity<Enfant>().HasData(
 
                   new Enfant()
                   {
@@ -226,10 +236,10 @@ namespace tp2JordanCoutureLafranchise.Models.Data
                          Salaire = 3,
                          Equipe = "Penguins de Pittsburgh",
                          EnVedette = "Oui",
-                         Entraineurs= new List<Entraineur>()
-                         
+                         Entraineurs = new List<Entraineur>()
+
                      }
-                        );;
+                        );
 
             modelBuilder.Entity<Parent>().HasData(
                   new Parent() { ParentId = 1, Nom = "Penguins de Pittsburgh", Description = "Équipe de hockey sur glace de la LNH basée à Pittsburgh", ImageURL = "/Images/pittsburgh.png" },
@@ -245,20 +255,40 @@ namespace tp2JordanCoutureLafranchise.Models.Data
 
 
             modelBuilder.Entity<Entraineur>().HasData(
-                new Entraineur { Id = 1, NomComplet = "Claude Julien", Specialite = "Stratégie de jeu",Joueurs= new List<Enfant>() {  } },
-                new Entraineur { Id = 2, NomComplet = "Mike Babcock", Specialite = "Développement des joueurs", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 3, NomComplet = "Joel Quenneville", Specialite = "Gestion des effectifs", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 4, NomComplet = "Barry Trotz", Specialite = "Défense et système défensif", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 5, NomComplet = "Bruce Cassidy", Specialite = "Attaque et jeu de puissance", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 6, NomComplet = "Alain Vigneault", Specialite = "Gestion des ressources humaines", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 7, NomComplet = "Peter DeBoer", Specialite = "Gestion des gardiens de but", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 8, NomComplet = "John Tortorella", Specialite = "Leadership et motivation", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 9, NomComplet = "Paul Maurice", Specialite = "Gestion du vestiaire", Joueurs = new List<Enfant>() },
-                new Entraineur { Id = 10, NomComplet = "Travis Green", Specialite = "Développement des jeunes joueurs", Joueurs = new List<Enfant>() }
+                new Entraineur { Id = 1, NomComplet = "Claude Julien", Specialite = "Stratégie de jeu"},
+                new Entraineur { Id = 2, NomComplet = "Mike Babcock", Specialite = "Développement des joueurs" },
+                new Entraineur { Id = 3, NomComplet = "Joel Quenneville", Specialite = "Gestion des effectifs"},
+                new Entraineur { Id = 4, NomComplet = "Barry Trotz", Specialite = "Défense et système défensif" },
+                new Entraineur { Id = 5, NomComplet = "Bruce Cassidy", Specialite = "Attaque et jeu de puissance" },
+                new Entraineur { Id = 6, NomComplet = "Alain Vigneault", Specialite = "Gestion des ressources humaines" },
+                new Entraineur { Id = 7, NomComplet = "Peter DeBoer", Specialite = "Gestion des gardiens de but" },
+                new Entraineur { Id = 8, NomComplet = "John Tortorella", Specialite = "Leadership et motivation"        },
+                new Entraineur { Id = 9, NomComplet = "Paul Maurice", Specialite = "Gestion du vestiaire" },
+                new Entraineur { Id = 10, NomComplet = "Travis Green", Specialite = "Développement des jeunes joueurs" }
             );
 
+            modelBuilder.Entity<EnfantEntraineur>().HasData(
+                 new EnfantEntraineur { Id = 1, EnfantId = 1, EntraineurId = 1 },
+                 new EnfantEntraineur { Id = 2, EnfantId = 2, EntraineurId = 2 },
+                 new EnfantEntraineur { Id = 3, EnfantId = 3, EntraineurId = 3 },
 
+                 new EnfantEntraineur { Id = 4, EnfantId = 4, EntraineurId = 4 },
+                 new EnfantEntraineur { Id = 5, EnfantId = 5, EntraineurId = 5 },
+                 new EnfantEntraineur { Id = 6, EnfantId = 6, EntraineurId = 6 },
 
+                 new EnfantEntraineur { Id = 7, EnfantId = 7, EntraineurId = 7 },
+                 new EnfantEntraineur { Id = 8, EnfantId = 8, EntraineurId = 8 },
+                 new EnfantEntraineur { Id = 9, EnfantId = 9, EntraineurId = 9 },
+                 new EnfantEntraineur { Id = 10, EnfantId = 10, EntraineurId = 10 }
+               );
+
+                    modelBuilder.Entity<Enfant>()
+            .HasMany(e => e.Entraineurs)
+            .WithMany(e => e.Joueurs)
+            .UsingEntity<EnfantEntraineur>(
+                j => j.HasOne(ee => ee.Entraineur).WithMany(),
+                j => j.HasOne(ee => ee.Enfant).WithMany()
+            );
 
 
         }

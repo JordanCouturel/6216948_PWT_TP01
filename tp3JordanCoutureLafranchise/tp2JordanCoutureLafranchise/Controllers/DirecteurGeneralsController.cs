@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -165,16 +166,39 @@ namespace tp3JordanCoutureLafranchise.Controllers
         {
           return (_context.DG?.Any(e => e.Id == id)).GetValueOrDefault();
         }
-
-        public IActionResult StatistiqueEntraineur(StatistiquesVM statsVM)
+        [Authorize(Roles ="Admin")]
+        public IActionResult StatistiqueEntraineur()
         {
-            var entraineursStats = _context.Entraineur
-          .Select(e => new StatistiquesVM
-          {
-              entraineur = e,
-              NbJoueurs = e.Joueurs.Count
-          })
-          .ToList();
+
+            //var entraineurs = _context.Entraineur.ToList();
+            //var enfants= _context.Enfants.ToList();
+
+            //var enfantentraineurs = _context.EnfantEntraineurs.ToList();
+
+            //foreach (var relation in enfantentraineurs)
+            //{
+            //    entraineurs[relation.EntraineurId].Joueurs.Add(enfants[relation.EnfantId]);
+            //}
+
+            //var entraineursStats = new List<StatistiquesVM>();
+            //foreach (var item in entraineurs)
+            //{ 
+            //    entraineursStats.Add( new StatistiquesVM
+            //    {
+            //        entraineur = item,
+            //        NbJoueurs = item.Joueurs.Count
+
+            //    });
+            //}
+
+            var entraineursStats = _context.Entraineur.Include(e=>e.Joueurs)
+                    .Select(e => new StatistiquesVM
+                    {
+                        entraineur = e,
+                        NbJoueurs = e.Joueurs.Count
+
+                    })
+                    .ToList();
 
             var moyenneEnfantsParEntraineur = entraineursStats.Average(s => s.NbJoueurs);
 
@@ -182,6 +206,7 @@ namespace tp3JordanCoutureLafranchise.Controllers
 
             return View(entraineursStats);
         }
+        [Authorize(Roles = "User" )]
         public IActionResult StatistiqueJoueur(StatistiquesVM statsVM)
         {
             var entraineursStats = _context.Enfants

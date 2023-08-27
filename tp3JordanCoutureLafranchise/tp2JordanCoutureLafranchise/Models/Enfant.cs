@@ -66,7 +66,7 @@ namespace tp2JordanCoutureLafranchise.Models
         
 
         //PROP NAV  
-        public virtual List<Entraineur> Entraineurs { get; set; }
+        public virtual ICollection<Entraineur> Entraineurs { get; set; }
 
 
     }

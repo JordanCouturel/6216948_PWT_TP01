@@ -1,40 +1,45 @@
 ﻿using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using System.Diagnostics;
 using tp2JordanCoutureLafranchise.Models;
 using tp2JordanCoutureLafranchise.Models.Data;
+using tp2JordanCoutureLafranchise.ViewModels;
+using tp3JordanCoutureLafranchise.Services;
 using tp3JordanCoutureLafranchise.ViewModels;
 
 namespace tp2JordanCoutureLafranchise.Controllers
 {
     public class HomeController : Controller
     {
-
+        private IParentService _parentService { get; set; }
         private HockeyRebelsDBContext _BaseDonnees { get; set; }
         private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(HockeyRebelsDBContext BaseDeDonnees,IStringLocalizer<HomeController> localizer)
+        public HomeController(/*HockeyRebelsDBContext BaseDonnees,*/ IParentService parentService, IStringLocalizer<HomeController> localizer)
         {
-            _BaseDonnees = BaseDeDonnees;
+            //_BaseDonnees = BaseDonnees;
             _localizer = localizer;
+            _parentService= parentService;
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewData["Title"] = this._localizer["HomeIndexTitle"];
-            var listeparents = _BaseDonnees.Parents.ToList();
+            //var listeparents = _BaseDonnees.Parents.ToList();
+            IEnumerable<Parent> ParentsList = await _parentService.GetAllAsync();
 
 
-            return View(listeparents);
+            return View(ParentsList);
         }
 
 
 
-        public ActionResult Delete(int id)
+        public async  Task<ActionResult> Delete(int id)
         {
-            Parent equipe = _BaseDonnees.Parents.Where(x => x.ParentId == id).FirstOrDefault();
+            Parent equipe =  await _parentService.GetByIdAsync(id);
 
             return View(equipe);
         }
@@ -42,19 +47,18 @@ namespace tp2JordanCoutureLafranchise.Controllers
         // POST: GestionEnfantController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
-            var parentasupprimer = _BaseDonnees.Parents.Where(x => x.ParentId == id).Single();
+            Parent parent =  await _parentService.GetByIdAsync(id);
             //supprimer l'enfant avec l'id passé en parametre de la
             // BD et de la liste des enfants de son parent
 
             if (ModelState.IsValid)
             {
-                _BaseDonnees.Parents.Remove(parentasupprimer);
-                _BaseDonnees.SaveChanges();
+               await _parentService.DeleteAsync(id);
                 return RedirectToAction("Index", "Home");
             }
-            return View(parentasupprimer);
+            return View(parent);
 
         }
 
@@ -68,13 +72,13 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Parent parent)
+        public async Task< IActionResult> Create(Parent parent)
         {
             if (ModelState.IsValid)
             {
                 ViewData["titre"] = "Ajouter une équipe";
-                _BaseDonnees.Parents.Add(parent);
-                _BaseDonnees.SaveChanges();
+               await _parentService.CreateAsync(parent);
+                
                 return RedirectToAction("index", "Home");
             }
             return View(parent);
@@ -82,22 +86,22 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
         }
 
-
-        public IActionResult Update(int id)
+       
+        public async Task<IActionResult> Update(int id)
         {
-            var parent = _BaseDonnees.Parents.Where(x => x.ParentId == id).FirstOrDefault();
+            Parent? parent = await _parentService.GetByIdAsync(id);
             ViewData["titre"] = "Modifier une équipe";
             return View(parent);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Parent parent)
+        public async Task<IActionResult> Update(Parent parent)
         {
             if (ModelState.IsValid)
             {
                 ViewData["titre"] = "Modifier une équipe";
-                _BaseDonnees.Parents.Update(parent);
-                _BaseDonnees.SaveChanges();
+                await _parentService.EditAsync(parent);
                 return RedirectToAction("index", "Home");
             }
             return View(parent);
@@ -118,8 +122,20 @@ namespace tp2JordanCoutureLafranchise.Controllers
             return LocalRedirect(returnUrl);
         }
 
+        //public IActionResult Details(int id)
+        //{
+        //    var detailparentvm = new DetailParentVM
+        //    {
+        //        Parent = _BaseDonnees.Parents.Where(x => x.ParentId == id).FirstOrDefault(),
+        //        enfants = _BaseDonnees.Enfants.Where(x => x.ParentId == id).ToList()
 
-      
+        //    };
+
+        //    return View(detailparentvm);
+        //}
+
+
+
 
     }
 }

@@ -7,11 +7,11 @@ namespace tp3JordanCoutureLafranchise.ViewModels
     {
         public Entraineur entraineur { get; set; }
 
-        public int NbJoueurs { get; set; }
+        public int? NbJoueurs { get; set; }
 
         public Enfant Joueur { get; set; }
 
-        public int NbEntraineurs { get; set; }
+        public int? NbEntraineurs { get; set; }
 
     }  
 }
