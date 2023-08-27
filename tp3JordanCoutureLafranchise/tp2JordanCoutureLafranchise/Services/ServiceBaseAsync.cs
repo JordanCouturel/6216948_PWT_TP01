@@ -50,6 +50,10 @@ namespace tp3JordanCoutureLafranchise.Services
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }
+
+
+
+
     }
 
 }

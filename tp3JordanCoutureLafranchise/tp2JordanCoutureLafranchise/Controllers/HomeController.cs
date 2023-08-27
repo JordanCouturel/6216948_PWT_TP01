@@ -76,10 +76,13 @@ namespace tp2JordanCoutureLafranchise.Controllers
         {
             if (ModelState.IsValid)
             {
-                ViewData["titre"] = "Ajouter une équipe";
-               await _parentService.CreateAsync(parent);
+               
+                    ViewData["titre"] = "Ajouter une équipe";
+                    await _parentService.CreateAsync(parent);
+
+                    return RedirectToAction("index", "Home");
                 
-                return RedirectToAction("index", "Home");
+          
             }
             return View(parent);
 
