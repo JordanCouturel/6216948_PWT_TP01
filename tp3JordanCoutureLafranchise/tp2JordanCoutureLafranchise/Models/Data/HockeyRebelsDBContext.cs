@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using tp3JordanCoutureLafranchise.Models;
 
 namespace tp2JordanCoutureLafranchise.Models.Data
 {
-    public class HockeyRebelsDBContext : DbContext
+    public class HockeyRebelsDBContext : IdentityDbContext<IdentityUser>
     {
         private readonly ILogger<HockeyRebelsDBContext> _logger;
         public HockeyRebelsDBContext(DbContextOptions<HockeyRebelsDBContext> options,ILogger<HockeyRebelsDBContext> logger) : base(options)
@@ -22,7 +24,10 @@ namespace tp2JordanCoutureLafranchise.Models.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           var enfants= modelBuilder.Entity<Enfant>().HasData(
+
+            base.OnModelCreating(modelBuilder);
+
+            var enfants= modelBuilder.Entity<Enfant>().HasData(
 
                   new Enfant()
                   {
