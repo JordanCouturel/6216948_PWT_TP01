@@ -8,7 +8,7 @@ namespace tp2JordanCoutureLafranchise.Models
     public class Enfant
     {
         [Key]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
 
         [ForeignKey("Parent")]
@@ -66,7 +66,7 @@ namespace tp2JordanCoutureLafranchise.Models
         
 
         //PROP NAV  
-        public virtual ICollection<Entraineur> Entraineurs { get; set; }
+        public virtual ICollection<Entraineur>? Entraineurs { get; set; }
 
 
     }

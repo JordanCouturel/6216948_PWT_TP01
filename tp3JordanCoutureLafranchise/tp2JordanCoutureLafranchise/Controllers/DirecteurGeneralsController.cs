@@ -170,27 +170,6 @@ namespace tp3JordanCoutureLafranchise.Controllers
         public IActionResult StatistiqueEntraineur()
         {
 
-            //var entraineurs = _context.Entraineur.ToList();
-            //var enfants= _context.Enfants.ToList();
-
-            //var enfantentraineurs = _context.EnfantEntraineurs.ToList();
-
-            //foreach (var relation in enfantentraineurs)
-            //{
-            //    entraineurs[relation.EntraineurId].Joueurs.Add(enfants[relation.EnfantId]);
-            //}
-
-            //var entraineursStats = new List<StatistiquesVM>();
-            //foreach (var item in entraineurs)
-            //{ 
-            //    entraineursStats.Add( new StatistiquesVM
-            //    {
-            //        entraineur = item,
-            //        NbJoueurs = item.Joueurs.Count
-
-            //    });
-            //}
-
             var entraineursStats = _context.Entraineur.Include(e=>e.Joueurs)
                     .Select(e => new StatistiquesVM
                     {

@@ -6,6 +6,7 @@ namespace tp3JordanCoutureLafranchise.Models
 {
     public class EnfantEntraineur
     {
+
         [Key]
         public int Id { get; set; }
 

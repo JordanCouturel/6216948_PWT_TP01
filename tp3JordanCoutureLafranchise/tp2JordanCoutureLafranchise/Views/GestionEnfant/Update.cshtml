@@ -68,6 +68,13 @@
                             </select>
                             <span asp-validation-for="@Model.Enfant.ParentId" class="text-danger"></span>
 
+                            <label>Choosir des entraineurs</label>
+                            <div class="form-group" style="width:500px;">
+
+                                @Html.ListBoxFor(m => m.SelectedEntraineurIds, Model.AvailableEntraineurs, new { @multiple = "multiple" })
+                            </div>
+
+
 
 
                         </div>

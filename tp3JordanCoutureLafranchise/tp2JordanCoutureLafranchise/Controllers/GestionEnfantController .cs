@@ -56,10 +56,16 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
         public IActionResult Create()
         {
-            ViewData["titre"] = "Ajouter une équipe";
+            ViewData["titre"] = "Ajouter un joueur";
+            var availableEntraineurs = _BaseDonnees.Entraineur.Select(t=>new SelectListItem
+            {
+                Text = t.NomComplet,
+                Value = t.Id.ToString()
+            } );
             var enfantVM = new EnfantVM
             {
-                Enfant = new Enfant() // Create a new Enfant instance with default values
+                Enfant = new Enfant(), // Create a new Enfant instance with default values
+                AvailableEntraineurs = availableEntraineurs
             };
             enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
             {
@@ -67,6 +73,8 @@ namespace tp2JordanCoutureLafranchise.Controllers
                 Value = t.ParentId.ToString()
             }).OrderBy(t => t.Text);
 
+            
+          
             return View(enfantVM);
         }
 
@@ -76,13 +84,29 @@ namespace tp2JordanCoutureLafranchise.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(EnfantVM enfantVM)
         {
-            
 
             if (ModelState.IsValid)
             {
-                enfantVM.Enfant.Equipe = _BaseDonnees.Parents.FirstOrDefault(p => p.ParentId == enfantVM.Enfant.ParentId)?.Nom;
 
-                ViewData["titre"] = "Ajouter un joueur";
+                enfantVM.Enfant.Equipe = _BaseDonnees.Parents.FirstOrDefault(p => p.ParentId == enfantVM.Enfant.ParentId)?.Nom;
+                if (enfantVM.Enfant.Entraineurs == null)
+                    enfantVM.Enfant.Entraineurs = new List<Entraineur>();
+
+
+                foreach (var item in enfantVM.SelectedEntraineurIds)
+                {
+                    var Entraineur = _BaseDonnees.Entraineur.Where(e => enfantVM.SelectedEntraineurIds.Contains(e.Id)).ToList();
+
+                    if (Entraineur != null)
+                    {
+                        foreach (var item1 in Entraineur)
+                        {
+                            enfantVM.Enfant.Entraineurs.Add(item1);
+                        }
+
+                    }
+                }
+
                 _BaseDonnees.Add(enfantVM.Enfant);
                 _BaseDonnees.SaveChanges();
 
@@ -91,11 +115,7 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
                 return RedirectToAction("index", "Home");
             }
-            enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
-            {
-                Text = t.Nom,
-                Value = t.ParentId.ToString()
-            }).OrderBy(t => t.Text);
+         
 
 
             return View(enfantVM);
@@ -104,17 +124,27 @@ namespace tp2JordanCoutureLafranchise.Controllers
 
         public IActionResult Update(int id)
         {
+
+            ViewData["titre"] = "Modifier un joueur";
+           
+            var availableEntraineurs = _BaseDonnees.Entraineur.Select(t => new SelectListItem
+            {
+                Text = t.NomComplet,
+                Value = t.Id.ToString()
+            });
             var enfantVM = new EnfantVM
             {
-                Enfant = new Enfant()
-                
+                Enfant = _BaseDonnees.Enfants.Where(t => t.Id == id).SingleOrDefault(),
+                AvailableEntraineurs = availableEntraineurs
             };
-            enfantVM.Enfant = _BaseDonnees.Enfants.Where(t => t.Id == id).SingleOrDefault();
+         
             enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
             {
                 Text = t.Nom,
                 Value = t.ParentId.ToString()
             }).OrderBy(t => t.Text);
+
+
 
             return View(enfantVM);
         }
@@ -124,24 +154,38 @@ namespace tp2JordanCoutureLafranchise.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(EnfantVM enfantVM)
         {
-            ViewData["titre"] = "Ajouter un joueur";
-           
-
-            enfantVM.Enfant.Equipe = _BaseDonnees.Parents.FirstOrDefault(p => p.ParentId == enfantVM.Enfant.ParentId)?.Nom;
-            if (ModelState.IsValid)
+     
+                  if (ModelState.IsValid)
             {
+
+                enfantVM.Enfant.Equipe = _BaseDonnees.Parents.FirstOrDefault(p => p.ParentId == enfantVM.Enfant.ParentId)?.Nom;
+                if (enfantVM.Enfant.Entraineurs == null)
+                    enfantVM.Enfant.Entraineurs = new List<Entraineur>();
+
+
+                foreach (var item in enfantVM.SelectedEntraineurIds)
+                {
+                    var Entraineur = _BaseDonnees.Entraineur.Where(e => enfantVM.SelectedEntraineurIds.Contains(e.Id)).ToList();
+
+                    if (Entraineur != null)
+                    {
+                        foreach (var item1 in Entraineur)
+                        {
+                            enfantVM.Enfant.Entraineurs.Add(item1);
+                        }
+
+                    }
+                }
+
                 _BaseDonnees.Update(enfantVM.Enfant);
                 _BaseDonnees.SaveChanges();
 
                 // Enregistrement de l'action dans le ILogger
-                _logger.LogInformation($"{enfantVM.Enfant.Nom} mis a jour avec succès");
+                _logger.LogInformation($"{enfantVM.Enfant.Nom} ajouté avec succès");
+
                 return RedirectToAction("index", "Home");
             }
-            enfantVM.ParentSelectList = _BaseDonnees.Parents.Select(t => new SelectListItem
-            {
-                Text = t.Nom,
-                Value = t.ParentId.ToString()
-            }).OrderBy(t => t.Text);
+         
 
 
             return View(enfantVM);
